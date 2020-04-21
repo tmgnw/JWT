@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Layouts/Layout.cshtml";
+}
+
+<p>
+    <button id="Add" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Create Employee</button>
+    @*<a href="@Url.Action("Excel","Department")" class="btn btn-primary"><span>Excel</span></a>
+    <a href="@Url.Action("Csv","Department")" class="btn btn-primary"><span>Csv</span></a>
+    <a href="@Url.Action("Pdf","Department")" class="btn btn-primary"><span>Pdf</span></a>*@
+</p>
+
+<div class="container">
+    <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Employee</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <form>
+                            <div class="form-group" hidden>
+                                <label for="Id">Id:</label>
+                                <input type="text" class="form-control" id="Id" name="Id">
+                            </div>
+                            <div class="form-group">
+                                <label for="FirstName">Firstname :</label>
+                                <input type="text" class="form-control" id="Firstname" placeholder="Enter Firstname" name="FirstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="LastName">Lastname :</label>
+                                <input type="text" class="form-control" id="Lastname" placeholder="Enter Lastname" name="LastName">
+                            </div>
+                            <div class="form-group">
+                                <label for="Email">Email :</label>
+                                <input type="text" class="form-control" id="Email" placeholder="Enter Email" name="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="Birthdate">Birthdate :</label>
+                                <input type="date" class="form-control" id="Birthdate" name="BirthDate">
+                            </div>
+                            <div class="form-group">
+                                <label for="Phonenumber">Phonenumber :</label>
+                                <input type="text" class="form-control" id="Phonenumber" placeholder="Enter Phonenumber" name="PhoneNumber">
+                            </div>
+                            <div class="form-group">
+                                <label for="Address">Address :</label>
+                                <input type="text" class="form-control" id="Address" placeholder="Enter Address" name="Address">
+                            </div>
+                            <div class="form-group">
+                                <label for="DepartmentName">Department Name :</label>
+                                <div class="form-group">
+                                    <select class="form-control" id="DepartmentOption" name="DepartmentOption"></select>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal" id="Save" onclick="Save();">Save</button>
+                    <button type="button" class="btn btn-warning" data-dismiss="modal" id="Update" onclick="Edit();">Update</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="table-responsive m-t-40">
+    <table id="Employee" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Fullname</th>
+                @*<th>Firstname</th>
+                <th>Lastname</th>*@
+                <th>Department Name</th>
+                <th>Email</th>
+                <th>Birthdate</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @*<tbody class="deptbody" />*@
+    </table>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/EmployeeScripts.js"></script>
+}
