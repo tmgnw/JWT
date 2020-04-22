@@ -13,19 +13,20 @@ namespace Client.Controllers
 {
     public class DepartmentController : Controller
     {
+        //private HttpClient client = new HttpClient
+        //{
+        //    BaseAddress = new Uri("https://localhost:44374/api/")
+        //};
+
         public IActionResult Index()
         {
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:44374/api/")
-            };
-            client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
-
             return View(LoadDepartment());
         }
 
         public JsonResult LoadDepartment()
         {
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
+            
             DepartmentJson departmentVM = null;
             var client = new HttpClient
             {
@@ -48,6 +49,7 @@ namespace Client.Controllers
 
         public JsonResult InsertOrUpdate(DepartmentVM departmentVM)
         {
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://localhost:44374/api/")
@@ -70,6 +72,8 @@ namespace Client.Controllers
 
         public JsonResult GetById(int Id)
         {
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
+
             DepartmentVM departmentVM = null;
             var client = new HttpClient
             {
@@ -92,6 +96,7 @@ namespace Client.Controllers
 
         public JsonResult Delete(int Id)
         {
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
             var client = new HttpClient
             {
                 BaseAddress = new Uri("https://localhost:44374/api/")

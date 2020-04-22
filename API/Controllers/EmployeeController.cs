@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.Base;
 using API.Models;
 using API.Repository.Data;
 using API.RepositoryContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class EmployeeController : BasesController<Employee, EmployeeRepository>
@@ -30,9 +33,9 @@ namespace API.Controllers
         }
 
         [HttpGet("{email}")]
-        public async Task<ActionResult<EmployeeVM>> Get(string email)
+        public async Task<ActionResult<EmployeeVM>> Get(string Email)
         {
-            var get = await _repository.Get(email);
+            var get = await _repository.Get(Email);
             if (get == null)
             {
                 return NotFound();
@@ -41,16 +44,17 @@ namespace API.Controllers
         }
 
         [HttpPut("{email}")]
-        public async Task<ActionResult<EmployeeVM>> Put(string email, Employee entity)
+        public async Task<ActionResult<EmployeeVM>> Put(string Email, Employee entity)
         {
-            var put = await _repository.Get(email);
+            var put = await _repository.Get(Email);
             if (put == null)
             {
                 return NotFound();
             }
             put.FirstName = entity.FirstName;
             put.LastName = entity.LastName;
-            put.Email = entity.Email;
+            put.Department_Id = entity.Department_Id;
+            //put.Email = entity.Email;
             put.BirthDate = entity.BirthDate;
             put.PhoneNumber = entity.PhoneNumber;
             put.Address = entity.Address;
@@ -67,9 +71,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{email}")]
-        public async Task<ActionResult<EmployeeVM>> Delete(string email)
+        public async Task<ActionResult<EmployeeVM>> Delete(string Email)
         {
-            var del = await _repository.Delete(email);
+            var del = await _repository.Delete(Email);
             if (del == null)
             {
                 return NotFound();

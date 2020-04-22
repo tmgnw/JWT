@@ -48,9 +48,9 @@ namespace API.Repository.Data
         //    }
         //}
 
-        public async Task<Employee> Get(string email)
+        public async Task<Employee> Get(string Email)
         {
-            return await _myContext.Set<Employee>().FindAsync(email);
+            return await _myContext.Set<Employee>().FindAsync(Email);
         }
 
         public async Task<IEnumerable<RegisterVM>> Create(RegisterVM employee)
@@ -71,9 +71,9 @@ namespace API.Repository.Data
             }
         }
 
-        public async Task<Employee> Delete(string email)
+        public async Task<Employee> Delete(string Email)
         {
-            var entity = await Get(email);
+            var entity = await Get(Email);
             if (entity == null)
             {
                 return entity;

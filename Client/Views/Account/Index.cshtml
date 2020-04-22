@@ -1,4 +1,6 @@
-﻿
+﻿@using API.Models
+@model LoginVM
+
 @{
     ViewData["Title"] = "Index";
     Layout = null;
@@ -56,9 +58,9 @@
                         <span class="focus-input100-1"></span>
                         <span class="focus-input100-2"></span>
                     </div>
-
+                </form>
                     <div class="container-login100-form-btn m-t-20">
-                        <button class="login100-form-btn" value="Log in" type="submit">
+                        <button class="login100-form-btn" onclick="Login()" type="submit">
                             Sign in
                         </button>
                     </div>
@@ -74,15 +76,15 @@
                     </div>
 
                     @*<div class="text-center">
-                            <span class="txt1">
-                                Create an account?
-                            </span>
+            <span class="txt1">
+                Create an account?
+            </span>
 
-                            <a href="#" class="txt2 hov1">
-                                Sign up
-                            </a>
-                        </div>*@
-                </form>
+            <a href="#" class="txt2 hov1">
+                Sign up
+            </a>
+        </div>*@
+                
             </div>
         </div>
     </div>
@@ -103,6 +105,8 @@
     <script src="~/Login_v19/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="~/Login_v19/js/main.js"></script>
+
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.js"></script>*@
 
     <script>
         function Login() {

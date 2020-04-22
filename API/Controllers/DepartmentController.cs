@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using API.Base;
 using API.Models;
 using API.Repository.Data;
 using API.RepositoryContext;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     [Route("api/[controller]")]
     [ApiController]
     public class DepartmentController : BasesController<Department, DepartmentRepository>
@@ -60,15 +63,15 @@ namespace API.Controllers
             return CreatedAtAction("Get", new { id = entity.Id }, entity);
         }
 
-        //[HttpDelete("{id}")]
-        //public async Task<ActionResult<Department>> Delete(int id)
-        //{
-        //    var delete = await _repository.Delete(id);
-        //    if (delete == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    return delete;
-        //}
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Department>> Delete(int id)
+        {
+            var delete = await _repository.Delete(id);
+            if (delete == null)
+            {
+                return NotFound();
+            }
+            return delete;
+        }
     }
 }

@@ -5,6 +5,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using API.Models;
+using API.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -24,6 +26,7 @@ namespace Client.Controllers
 
         public JsonResult LoadEmployee()
         {
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
             EmployeeJson employeeVM = null;
             var responseTask = client.GetAsync("Employee");
             responseTask.Wait();
@@ -58,17 +61,41 @@ namespace Client.Controllers
         //    }
         //}
 
-        public JsonResult GetById(int Id)
+        public JsonResult Insert(RegisterVM employee)
         {
-            IEnumerable<EmployeeVM> employee = null;
-            var responseTask = client.GetAsync("Employee/" + Id);
+            var myContent = JsonConvert.SerializeObject(employee);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var result = client.PostAsync("Auth/register", byteContent).Result;
+            return Json(result);
+        }
+
+        public JsonResult Updatee(EmployeeVM employeeVM)
+        {
+            var myContent = JsonConvert.SerializeObject(employeeVM);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var result = client.PutAsync("Employee/" + employeeVM.Email, byteContent).Result;
+            return Json(result);
+        }
+
+        public JsonResult GetById(string Email)
+        {
+            EmployeeVM employee = null;
+            var responseTask = client.GetAsync("Employee/" + Email);
             responseTask.Wait();
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
-                readTask.Wait();
-                employee = readTask.Result;
+                //var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
+                //readTask.Wait();
+                //employee = readTask.Result;
+                var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString(); 
+                employee = JsonConvert.DeserializeObject<EmployeeVM>(json);
             }
             else
             {
@@ -77,9 +104,9 @@ namespace Client.Controllers
             return Json(employee);
         }
 
-        public JsonResult Delete(int Id)
+        public JsonResult Delete(string Email)
         {
-            var result = client.DeleteAsync("Employee/" + Id).Result;
+            var result = client.DeleteAsync("Employee/" + Email).Result;
             return Json(result);
         }
     }

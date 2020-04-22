@@ -15,10 +15,11 @@ namespace Client.Controllers
     public class AccountController : Controller
     {
         public IActionResult Index()
-        {
+        {   
             return View();
         }
 
+        [HttpPost]
         public JsonResult Login(LoginVM loginVM)
         {
             //AccountViewModel accountVM = null;
@@ -33,7 +34,7 @@ namespace Client.Controllers
             var byteContent = new ByteArrayContent(buffer);
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var result = client.PostAsync("auth/login/", byteContent).Result;
+            var result = client.PostAsync("Auth/Login/", byteContent).Result;
 
             if (result.IsSuccessStatusCode)
             {
@@ -51,8 +52,17 @@ namespace Client.Controllers
                 HttpContext.Session.SetString("Role", role);
                 HttpContext.Session.SetString("Email", email);
 
-            }
+                //if (role == "Admin")
+                //{
+                //    return RedirectToAction("Index", "Department");
+                //}
+                //else
+                //{
+                //    return RedirectToAction("Index", "Employee");
+                //}
 
+            }
+            //return View();
             return Json(result);
         }
     }
