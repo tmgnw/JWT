@@ -21,6 +21,12 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
+            //var role = HttpContext.Session.GetString("Role");
+            //if (role == "Employee")
+            //{
+            //    return View(LoadEmployee());
+            //}
+            //return RedirectToAction("Index","Account");
             return View(LoadEmployee());
         }
 
@@ -42,24 +48,6 @@ namespace Client.Controllers
             }
             return Json(employeeVM);
         }
-
-        //public JsonResult InsertOrUpdate(EmployeeVM employeeVM)
-        //{
-        //    var myContent = JsonConvert.SerializeObject(employeeVM);
-        //    var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
-        //    var byteContent = new ByteArrayContent(buffer);
-        //    byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-        //    if (employeeVM.Id.Equals(0))
-        //    {
-        //        var result = client.PostAsync("Employee/", byteContent).Result;
-        //        return Json(result);
-        //    }
-        //    else
-        //    {
-        //        var result = client.PutAsync("Employee/" + employeeVM.Id, byteContent).Result;
-        //        return Json(result);
-        //    }
-        //}
 
         public JsonResult Insert(RegisterVM employee)
         {
@@ -108,6 +96,60 @@ namespace Client.Controllers
         {
             var result = client.DeleteAsync("Employee/" + Email).Result;
             return Json(result);
+        }
+
+        //public JsonResult GetDonut()
+        //{
+        //    IEnumerable<ChartVM> chartInfo = null;
+        //    List<ChartVM> chartData = new List<ChartVM>();
+            
+        //    //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWToken"));
+        //    var responseTask = client.GetAsync("Employee/ChartInfo"); //Access data from employees API
+        //    responseTask.Wait(); //Waits for the Task to complete execution.
+        //    var result = responseTask.Result;
+        //    if (result.IsSuccessStatusCode) // if access success
+        //    {
+        //        var readTask = result.Content.ReadAsAsync<IList<ChartVM>>(); //Get all the data from the API
+        //        readTask.Wait();
+        //        chartInfo = readTask.Result;
+        //        foreach (var item in chartInfo)
+        //        {
+        //            ChartVM data = new ChartVM();
+        //            data.label = item.label;
+        //            data.value = item.value;
+        //            chartData.Add(data);
+        //        }
+        //        var json = JsonConvert.SerializeObject(chartData, Formatting.Indented);
+        //        return Json(json);
+        //    }
+        //    return Json("internal server error");
+        //}
+
+        public JsonResult GetChart()
+        {
+            IEnumerable<ChartVM> chartInfo = null;
+            List<ChartVM> chartData = new List<ChartVM>();
+            
+            //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWToken"));
+            var responseTask = client.GetAsync("Employee/ChartInfo"); //Access data from employees API
+            responseTask.Wait(); //Waits for the Task to complete execution.
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode) // if access success
+            {
+                var readTask = result.Content.ReadAsAsync<IList<ChartVM>>(); //Get all the data from the API
+                readTask.Wait();
+                chartInfo = readTask.Result;
+                foreach (var item in chartInfo)
+                {
+                    ChartVM data = new ChartVM();
+                    data.label = item.label;
+                    data.value = item.value;
+                    chartData.Add(data);
+                }
+                var json = JsonConvert.SerializeObject(chartData, Formatting.Indented);
+                return Json(json);
+            }
+            return Json("internal server error");
         }
     }
 }

@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewData["Title"] = "AccEmployee";
+    Layout = "~/Views/Layouts/Layout.cshtml";
+}
+
+<div class="table-responsive m-t-40">
+    <div class="modal-content">
+        <form>
+            <div class="modal-header">
+                <h4 class="modal-title">Edit Employee</h4>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" class="form-control" id="Email" placeholder="Email">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="Name">Firstname :</label>
+                        <input class="form-control" id="FirstName" placeholder="First Name">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Name">Lastname :</label>
+                        <input class="form-control" id="LastName" placeholder="Last Name">
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="Name">Phonenumber :</label>
+                        <input class="form-control" id="PhoneNumber" placeholder="Phone Number">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Name">Address:</label>
+                        <input class="form-control" id="Address" placeholder="Address">
+                    </div>
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-sm-6">
+                        <label for="Name">Birth Date:</label>
+                        <input type="date" class="form-control" id="BirthDate" placeholder="Birth Date">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="Name">Department Name :</label>
+                        <div class="form-group">
+                            <select class="form-control" id="DepartmentOption" name="DepartmentId"></select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button id="UpdateBtn" type="button" onclick="Edittt()" class="btn btn-success">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Scripts/auth.js"></script>
+}

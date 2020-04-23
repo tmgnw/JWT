@@ -1,5 +1,9 @@
 ﻿var Departments = [];
 $(document).ready(function () {
+    //load Chart
+    Donut();
+    Bar();
+    //load Datatable
     table = $('#Employee').dataTable({
         "ajax": {
             url: "/Employee/LoadEmployee",
@@ -262,3 +266,52 @@ function Delete(email) {
         }
     });
 }
+//------------------------------------------------------------//
+function Donut() {
+    //debugger;
+    $.ajax({
+        type: 'GET',
+        url: '/Employee/GetChart/',
+        success: function (data) {
+            //debugger;
+            Morris.Donut({
+                element: 'DonutChart',
+                data: $.each(JSON.parse(data), function (index, val) {
+                    //debugger;
+                    [{
+                        label: val.label,
+                        value: val.value
+                    }]
+                }),
+                resize: true,
+                colors: ['#009efb', '#55ce63', '#2f3d4a']
+            });
+        }
+    })
+};
+//------------------------------------------------------------//
+function Bar() {
+    $.ajax({
+        type: 'GET',
+        url: '/Employee/GetChart/',
+        success: function (data) {
+            Morris.Bar({
+                element: 'BarChart',
+                data: $.each(JSON.parse(data), function (index, val) {
+                    //debugger;
+                    [{
+                        label: val.label,
+                        value: val.value
+                    }]
+                }),
+                xkey: 'label',
+                ykeys: ['value'],
+                labels: ['label'],
+                barColors: ['#009efb', '#55ce63', '#2f3d4a'],
+                hideHover: 'auto',
+                gridLineColor: '#eef0f2',
+                resize: true
+            });
+        }
+    })
+};

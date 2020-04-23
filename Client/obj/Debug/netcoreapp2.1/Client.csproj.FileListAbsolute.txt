@@ -19,7 +19,9 @@ C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Client.Assem
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Client.TagHelpers.input.cache
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Client.TagHelpers.output.cache
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Client.RazorCoreGenerate.cache
-C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Account\Index.cshtml.g.cs
+C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Account\AccEmployee.cshtml.g.cs
+C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Account\Not_Found.cshtml.g.cs
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Department\Index.cshtml.g.cs
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Employee\Index.cshtml.g.cs
 C:\Users\Thomas\source\repos\NetCore\Client\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.cshtml.g.cs

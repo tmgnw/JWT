@@ -20,7 +20,13 @@ namespace Client.Controllers
 
         public IActionResult Index()
         {
-            return View(LoadDepartment());
+            var role = HttpContext.Session.GetString("Role");
+            if (role == "Admin")
+            {
+                return View(LoadDepartment());
+            }
+            return RedirectToAction("Not_Found", "Account");
+            //return View(LoadDepartment());
         }
 
         public JsonResult LoadDepartment()

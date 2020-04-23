@@ -7,6 +7,7 @@ using API.Base;
 using API.Models;
 using API.Repository.Data;
 using API.RepositoryContext;
+using API.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -79,6 +80,14 @@ namespace API.Controllers
                 return NotFound();
             }
             return Ok(del);
+        }
+
+        [HttpGet]
+        [Route("ChartInfo")]
+        [HttpGet]
+        public async Task<IEnumerable<ChartVM>> Chart()
+        {
+            return await _repository.GetChart();
         }
     }
 }

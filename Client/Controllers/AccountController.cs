@@ -14,20 +14,21 @@ namespace Client.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index()
-        {   
+        private HttpClient client = new HttpClient
+        {
+            BaseAddress = new Uri("https://localhost:44374/api/")
+        };
+
+        [HttpGet]
+        public IActionResult Login()
+        {
             return View();
         }
 
         [HttpPost]
-        public JsonResult Login(LoginVM loginVM)
+        public IActionResult Login(LoginVM loginVM)
         {
             //AccountViewModel accountVM = null;
-
-            var client = new HttpClient
-            {
-                BaseAddress = new Uri("https://localhost:44374/api/")
-            };
 
             var myContent = JsonConvert.SerializeObject(loginVM);
             var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
@@ -52,18 +53,82 @@ namespace Client.Controllers
                 HttpContext.Session.SetString("Role", role);
                 HttpContext.Session.SetString("Email", email);
 
-                //if (role == "Admin")
-                //{
-                //    return RedirectToAction("Index", "Department");
-                //}
-                //else
-                //{
-                //    return RedirectToAction("Index", "Employee");
-                //}
+                if (role == "Admin")
+                {
+                    return RedirectToAction("Index", "Department");
+                }
+                else
+                {
+                    return RedirectToAction("AccEmployee", "Account");
+                }
+            }
+            return View();
+            //return Json(result);
+        }
 
+        public JsonResult LoadEmployee()
+        {
+            client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
+            //EmployeeJson employeeVM = null;
+            object datas = null;
+            var email = HttpContext.Session.GetString("Email");
+            var responseTask = client.GetAsync("Employee/" + email);
+            responseTask.Wait();
+            var result = responseTask.Result;
+            if (result.IsSuccessStatusCode)
+            {
+                var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString();
+                datas = JsonConvert.SerializeObject(json);
+
+                //var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
+                //readTask.Wait();
+                //return Json(readTask.Result[0]);
+            }
+            else
+            {
+                return Json(result);
+            }
+            return Json(datas);
+        }
+
+        public JsonResult EditEmp(Employee model)
+        {
+            client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
+            var myContent = JsonConvert.SerializeObject(model);
+            var buffer = System.Text.Encoding.UTF8.GetBytes(myContent);
+            var byteContent = new ByteArrayContent(buffer);
+            byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var result = client.PutAsync("Employee/" + model.Email, byteContent).Result;
+            return Json(result);
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("Email");
+            HttpContext.Session.Remove("JWToken");
+            HttpContext.Session.Remove("Role");
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpGet]
+        public IActionResult Not_Found()
+        {
+            return View();
+        }
+
+        public IActionResult AccEmployee()
+        {
+            var role = HttpContext.Session.GetString("Role");
+
+            if (role == "Employee")
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Not_Found", "Account");
             }
             //return View();
-            return Json(result);
         }
     }
 }
