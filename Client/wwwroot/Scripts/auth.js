@@ -18,33 +18,12 @@ $(document).ready(function () {
             });
         }
     });
-    //debugger;
-    $.ajax({
-        url: "/Account/LoadEmployee/",
-        type: "GET",
-        contentType: "application/json;charset=utf-8",
-        dataType: "json",
-        async: false,
-        success: function (result) {
-            //debugger;
-            $('#Email').val(result.email);
-            $('#FirstName').val(result.firstName);
-            $('#LastName').val(result.lastName);
-            $('#BirthDate').val(moment(result.birthDate).format('YYYY-MM-DD'));
-            $('#PhoneNumber').val(result.phoneNumber);
-            $('#Address').val(result.address);
-            $('#DepartmentOption').val(result.department_Id);
-            option = result.department_Id;
-            optionName = result.departmentName;
-        },
-        error: function (errormessage) {
-            alert(errormessage.responseText);
-        }
-    });
+    LoadEmp();
+    //LoadEmp2();
     $('#hidenav').hide();
 });
 //------------------------------------------------------------------------------//
-function Edittt() {
+function Edit() {
     var table = $('#Employee').DataTable({
         "ajax": {
             url: "/Account/LoadEmployee/"
@@ -52,10 +31,9 @@ function Edittt() {
     });
     var Employee = new Object();
     Employee.email = $('#Email').val();
-    //Employee.Password = $('#Password').val();
     Employee.firstName = $('#FirstName').val();
     Employee.lastName = $('#LastName').val();
-    Employee.deptModelId = $('#DepartmentOption').val();
+    Employee.department_Id = $('#DepartmentOption').val();
     Employee.birthDate = $('#BirthDate').val();
     Employee.phoneNumber = $('#PhoneNumber').val();
     Employee.address = $('#Address').val();
@@ -80,3 +58,48 @@ function Edittt() {
     })
 }
 //------------------------------------------------------------------------------//
+function LoadEmp() {
+    debugger;
+    $.ajax({
+        url: "/Account/LoadEmployee/",
+        type: "GET",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        async: false,
+        success: function (result) {
+            debugger;
+            var object = JSON.parse(result);
+            var object2 = JSON.parse(object);
+            $('#Email').val(object2.email);
+            $('#FirstName').val(object2.firstName);
+            $('#LastName').val(object2.lastName);
+            $('#BirthDate').val(moment(object2.birthDate).format('YYYY-MM-DD'));
+            $('#PhoneNumber').val(object2.phoneNumber);
+            $('#Address').val(object2.address);
+            $('#DepartmentOption').val(object2.department_Id);
+            option = object2.Department_Id;
+            optionName = object2.departmentName;
+        },
+        error: function (errormessage) {
+            alert(errormessage.responseText);
+        }
+    });
+}
+//------------------------------------------------------------------------------//
+//function LoadEmp2() {
+//    $.ajax({
+//        url: "/Account/LoadEmployee/"
+//    }).then((result) => {
+//        if (result) {
+//            $('#Email').val(result.email);
+//            $('#Firstname').val(result.firstName);
+//            $('#Lastname').val(result.lastName);
+//            $('#Birthdate').val(moment(result.birthDate).format('YYYY-MM-DD'));
+//            $('#Phonenumber').val(result.phoneNumber);
+//            $('#Address').val(result.address);
+//            $('#DepartmentOption').val(result.department_Id);
+//            option = object2.Department_Id;
+//            optionName = object2.departmentName;
+//        }
+//    })
+//}//------------------------------------------------------------------------------//

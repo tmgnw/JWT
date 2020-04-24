@@ -70,6 +70,8 @@ namespace Client.Controllers
         {
             client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
             //EmployeeJson employeeVM = null;
+            //EmployeeVM employee = null;
+
             object datas = null;
             var email = HttpContext.Session.GetString("Email");
             var responseTask = client.GetAsync("Employee/" + email);
@@ -79,16 +81,26 @@ namespace Client.Controllers
             {
                 var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString();
                 datas = JsonConvert.SerializeObject(json);
-
-                //var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
-                //readTask.Wait();
-                //return Json(readTask.Result[0]);
             }
             else
             {
                 return Json(result);
             }
             return Json(datas);
+
+            //var responseTask = client.GetAsync("Employee/" + email);
+            //responseTask.Wait();
+            //var result = responseTask.Result;
+            //if (result.IsSuccessStatusCode)
+            //{
+            //    var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString();
+            //    employee = JsonConvert.DeserializeObject<EmployeeVM>(json);
+            //}
+            //else
+            //{
+            //    ModelState.AddModelError(string.Empty, "Server Error");
+            //}
+            //return Json(employee);
         }
 
         public JsonResult EditEmp(Employee model)

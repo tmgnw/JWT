@@ -188,7 +188,6 @@ function Edit() {
         }
     });
     var Employee = new Object();
-    //Employee.Id = $('#Id').val();
     Employee.Email = $('#Email').val();
     Employee.FirstName = $('#Firstname').val();
     Employee.LastName = $('#Lastname').val();
@@ -315,3 +314,4 @@ function Bar() {
         }
     })
 };
+//------------------------------------------------------------//

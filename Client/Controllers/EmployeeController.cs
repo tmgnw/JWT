@@ -79,9 +79,6 @@ namespace Client.Controllers
             var result = responseTask.Result;
             if (result.IsSuccessStatusCode)
             {
-                //var readTask = result.Content.ReadAsAsync<IList<EmployeeVM>>();
-                //readTask.Wait();
-                //employee = readTask.Result;
                 var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString(); 
                 employee = JsonConvert.DeserializeObject<EmployeeVM>(json);
             }
@@ -97,33 +94,6 @@ namespace Client.Controllers
             var result = client.DeleteAsync("Employee/" + Email).Result;
             return Json(result);
         }
-
-        //public JsonResult GetDonut()
-        //{
-        //    IEnumerable<ChartVM> chartInfo = null;
-        //    List<ChartVM> chartData = new List<ChartVM>();
-            
-        //    //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWToken"));
-        //    var responseTask = client.GetAsync("Employee/ChartInfo"); //Access data from employees API
-        //    responseTask.Wait(); //Waits for the Task to complete execution.
-        //    var result = responseTask.Result;
-        //    if (result.IsSuccessStatusCode) // if access success
-        //    {
-        //        var readTask = result.Content.ReadAsAsync<IList<ChartVM>>(); //Get all the data from the API
-        //        readTask.Wait();
-        //        chartInfo = readTask.Result;
-        //        foreach (var item in chartInfo)
-        //        {
-        //            ChartVM data = new ChartVM();
-        //            data.label = item.label;
-        //            data.value = item.value;
-        //            chartData.Add(data);
-        //        }
-        //        var json = JsonConvert.SerializeObject(chartData, Formatting.Indented);
-        //        return Json(json);
-        //    }
-        //    return Json("internal server error");
-        //}
 
         public JsonResult GetChart()
         {
@@ -151,5 +121,25 @@ namespace Client.Controllers
             }
             return Json("internal server error");
         }
+
+        //public JsonResult LoadData()
+        //{
+        //    //client.DefaultRequestHeaders.Add("Authorization", HttpContext.Session.GetString("JWTToken"));
+        //    EmployeeVM employee = null;
+        //    var email = HttpContext.Session.GetString("Email");
+        //    var responseTask = client.GetAsync("Employee/" + email);
+        //    responseTask.Wait();
+        //    var result = responseTask.Result;
+        //    if (result.IsSuccessStatusCode)
+        //    {
+        //        var json = JsonConvert.DeserializeObject(result.Content.ReadAsStringAsync().Result).ToString();
+        //        employee = JsonConvert.DeserializeObject<EmployeeVM>(json);
+        //    }
+        //    else
+        //    {
+        //        ModelState.AddModelError(string.Empty, "Server Error");
+        //    }
+        //    return Json(employee);
+        //}
     }
 }
